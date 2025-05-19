@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Sorvetes</title>
+</head>
+<body>
+<h1>Lista de Sorvetes</h1>
+<a th:href="@{/sorvetes/novo}">Adicionar Novo Sorvete</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Sabor</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Ações</th>
+    </tr>
+    <tr th:each="sorvete : ${sorvetes}">
+        <td th:text="${sorvete.id}">1</td>
+        <td th:text="${sorvete.sabor}">Chocolate</td>
+        <td th:text="${sorvete.descricao}">Delicioso</td>
+        <td th:text="${sorvete.preco}">5.00</td>
+        <td>
+            <a th:href="@{'/sorvetes/editar/' + ${sorvete.id}}">Editar</a>
+            <a th:href="@{'/sorvetes/excluir/' + ${sorvete.id}}">Excluir</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
