@@ -1,29 +1,169 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
     <title>Lista de Sorvetes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdf6e3, #ffe0ec);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #ff5c8d;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .add-button {
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 1rem;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .add-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ffb86c;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fdf6e3;
+        }
+
+        tr:hover {
+            background-color: #ffe0ec;
+        }
+
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #ff5c8d;
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            tr {
+                margin-bottom: 15px;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                padding: 10px;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                top: 10px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            .actions a {
+                display: inline-block;
+                margin-top: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>Lista de Sorvetes</h1>
-<a th:href="@{/sorvetes/novo}">Adicionar Novo Sorvete</a>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Sabor</th>
-        <th>Descrição</th>
-        <th>Preço</th>
-        <th>Ações</th>
-    </tr>
-    <tr th:each="sorvete : ${sorvetes}">
-        <td th:text="${sorvete.id}">1</td>
-        <td th:text="${sorvete.sabor}">Chocolate</td>
-        <td th:text="${sorvete.descricao}">Delicioso</td>
-        <td th:text="${sorvete.preco}">5.00</td>
-        <td>
-            <a th:href="@{'/sorvetes/editar/' + ${sorvete.id}}">Editar</a>
-            <a th:href="@{'/sorvetes/excluir/' + ${sorvete.id}}">Excluir</a>
-        </td>
-    </tr>
-</table>
+
+<div class="container">
+    <h1>🍦 Nossos Sorvetes</h1>
+
+    <a th:href="@{/Sorvete/novo}" class="add-button">+ Adicionar Novo Sorvete</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Sabor</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sorvete : ${sorvete}">
+            <td data-label="ID" th:text="${sorvete.id}">1</td>
+            <td data-label="Sabor" th:text="${sorvete.sabor}">Chocolate</td>
+            <td data-label="Descrição" th:text="${sorvete.descricao}">Delicioso</td>
+            <td data-label="Preço" th:text="${sorvete.preco}">5.00</td>
+            <td class="actions">
+                <a th:href="@{'/Sorvete/editar/' + ${sorvete.id}}">Editar</a>
+                <a th:href="@{'/Sorvete/excluir/' + ${sorvete.id}}">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

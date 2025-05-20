@@ -16,6 +16,21 @@ public class SorveteController {
         this.sorveteRepository = sorveteRepository;
     }
 
+    @GetMapping("/")
+    public String home() {
+        return "index"; // Renderiza index.html da pasta templates
+    }
+
+    @GetMapping("/lista")
+    public String lista() {
+        return "lista"; // Renderiza lista.html da pasta templates
+    }
+
+    @GetMapping("/formulario")
+    public String formulario() {
+        return "formulario"; // Renderiza formulario.html da pasta templates
+    }
+
     @GetMapping
     public String listarSorvetes(Model model) {
         model.addAttribute("Sorvete", sorveteRepository.findAll());
