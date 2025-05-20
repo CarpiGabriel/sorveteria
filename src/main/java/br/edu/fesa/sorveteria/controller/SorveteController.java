@@ -33,20 +33,20 @@ public class SorveteController {
 
     @GetMapping
     public String listarSorvetes(Model model) {
-        model.addAttribute("Sorvete", sorveteRepository.findAll());
-        return "/lista";
+        model.addAttribute("sorvetes", sorveteRepository.findAll());
+        return "lista";
     }
 
     @GetMapping("/novo")
     public String mostrarFormularioNovoSorvete(Model model) {
         model.addAttribute("sorvete", new Sorvete());
-        return "/formulario";
+        return "formulario";
     }
 
     @PostMapping
     public String salvarSorvete(@ModelAttribute Sorvete sorvete) {
         sorveteRepository.save(sorvete);
-        return "redirect:/formulario";
+        return "redirect:/Sorvete";
     }
 
     @GetMapping("/editar/{id}")
@@ -59,6 +59,6 @@ public class SorveteController {
     @GetMapping("/excluir/{id}")
     public String excluirSorvete(@PathVariable Long id) {
         sorveteRepository.deleteById(id);
-        return "redirect:/formulario";
+        return "redirect:/Sorvete";
     }
 }

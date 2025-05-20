@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro de Cliente</title>
+</head>
+<body>
+<h1>Registro de Cliente</h1>
+<form th:action="@{/clientes}" method="post" th:object="${cliente}">
+    <label>Nome:</label>
+    <input type="text" th:field="*{nome}" required /><br/>
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required /><br/>
+    <button type="submit">Registrar</button>
+</form>
+<a th:href="@{/clientes}">Voltar para Lista</a>
+</body>
+</html>
