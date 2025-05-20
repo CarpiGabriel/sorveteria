@@ -142,7 +142,8 @@
     <h1>Cadastro de Cliente</h1>
     <a th:href="@{/Cliente}" class="return-button">← Voltar para a Lista</a>
     <form th:action="@{/Cliente}" method="post" th:object="${cliente}">
-    <div>
+        <input type="hidden" th:field="*{id}" />
+        <div>
             <label for="nome">Nome</label>
             <input type="text" id="nome" th:field="*{nome}" required />
         </div>
