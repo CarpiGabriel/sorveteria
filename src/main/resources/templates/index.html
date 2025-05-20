@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Sorveteria FESA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet" />
 
     <style>
         /* Reset */
@@ -20,10 +19,32 @@
             font-family: 'Quicksand', sans-serif;
             background: linear-gradient(135deg, #fdf6e3, #ffe0ec);
             min-height: 100vh;
+            padding-top: 70px; /* espaço para barra fixa */
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+        }
+
+        /* Barra fixa no topo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-family: 'Pacifico', cursive;
+            color: white;
+            font-size: 1.8rem;
+            user-select: none;
         }
 
         .container {
@@ -46,6 +67,7 @@
             right: -20px;
             opacity: 0.1;
             transform: rotate(25deg);
+            user-select: none;
         }
 
         h1 {
@@ -53,6 +75,7 @@
             font-size: 3rem;
             color: #ff5c8d;
             margin-bottom: 10px;
+            user-select: none;
         }
 
         p {
@@ -81,12 +104,86 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .button:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
+
+        /* Balões fixos de contato */
+        .contact-balloons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1100;
+        }
+
+        .balloon {
+            background: #ff5c8d;
+            color: white;
+            border-radius: 30px;
+            padding: 0 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            position: relative;
+            user-select: none;
+            transition: width 0.4s ease, padding-left 0.4s ease;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .balloon:hover,
+        .balloon:focus {
+            width: 330px; /* mais largura para caber o email todo */
+            padding-left: 20px;
+            border-radius: 30px;
+            justify-content: flex-start;
+            overflow: visible;
+        }
+
+        .balloon .icon {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            user-select: none;
+        }
+
+        .balloon .text {
+            opacity: 0;
+            width: 0;
+            margin-left: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease 0.15s, width 0.3s ease 0.15s;
+            user-select: text;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .balloon:hover .text,
+        .balloon:focus .text {
+            opacity: 1;
+            width: auto;
+            overflow: visible;
+        }
+
 
         @media (max-width: 500px) {
             .container {
@@ -105,10 +202,26 @@
             .button {
                 width: 100%;
             }
+
+            /* Ajusta balões na tela pequena */
+            .contact-balloons {
+                bottom: 20px;
+                right: 20px;
+                gap: 10px;
+            }
+
+            .balloon:hover,
+            .balloon:focus {
+                width: 180px;
+            }
         }
     </style>
 </head>
 <body>
+
+<header>
+    <h1>🍦 Sorveteria FESA</h1>
+</header>
 
 <div class="container">
     <h1>🍦 Sorveteria FESA</h1>
@@ -116,9 +229,18 @@
 
     <div class="button-container">
         <a href="/Sorvete" class="button">Ver Sorvetes</a>
-        <a href="/Cliente">
-            <button class="button">Ver Clientes</button>
-        </a>
+        <a href="/Cliente" class="button">Ver Clientes</a>
+    </div>
+</div>
+
+<div class="contact-balloons">
+    <div class="balloon" tabindex="0" role="button" aria-label="Telefone para contato">
+        <span class="icon">📞</span>
+        <span class="text">+55 (11) 98765-4321</span>
+    </div>
+    <div class="balloon" tabindex="0" role="button" aria-label="Email para contato">
+        <span class="icon">✉️</span>
+        <span class="text">contato@sorveteriafesa.com</span>
     </div>
 </div>
 
