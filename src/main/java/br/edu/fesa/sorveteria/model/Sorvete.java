@@ -41,11 +41,15 @@ public class Sorvete {
         return preco;
     }
 
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
     public String getDescricao() {
         return descricao;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

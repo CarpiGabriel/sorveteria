@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/clientes")
+@RequestMapping("/Cliente")
 public class ClienteController {
 
     private final ClienteRepository clienteRepository;
@@ -19,18 +19,31 @@ public class ClienteController {
     @GetMapping
     public String listarClientes(Model model) {
         model.addAttribute("clientes", clienteRepository.findAll());
-        return "cliente_lista";
+        return "listaClientes";
     }
 
     @GetMapping("/novo")
-    public String mostrarFormulario(Model model) {
+    public String mostrarFormularioNovoCliente(Model model) {
         model.addAttribute("cliente", new Cliente());
-        return "cliente_formulario";
+        return "formularioCliente";
     }
 
     @PostMapping
     public String salvarCliente(@ModelAttribute Cliente cliente) {
         clienteRepository.save(cliente);
-        return "redirect:/clientes";
+        return "redirect:/Cliente";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditarCliente(@PathVariable Long id, Model model) {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+        model.addAttribute("cliente", cliente);
+        return "formularioCliente";
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String excluirCliente(@PathVariable Long id) {
+        clienteRepository.deleteById(id);
+        return "redirect:/Cliente";
     }
 }

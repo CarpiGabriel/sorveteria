@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Sorvetes</title>
+    <title>Lista de Clientes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
 
@@ -29,69 +28,75 @@
             background: white;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
             max-width: 900px;
             width: 100%;
             position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "👥";
+            font-size: 100px;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            opacity: 0.08;
+            transform: rotate(-15deg);
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             font-size: 2.5rem;
             color: #ff5c8d;
-            margin-bottom: 30px;
             text-align: center;
+            margin-bottom: 30px;
         }
 
         .add-button {
-            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
-            border: none;
-            border-radius: 50px;
-            padding: 10px 25px;
-            font-size: 1rem;
-            color: white;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
             display: inline-block;
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
             margin-bottom: 20px;
             transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
         .add-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 1rem;
+            margin-top: 10px;
         }
 
         th, td {
-            padding: 12px 15px;
+            padding: 12px 10px;
             text-align: left;
         }
 
         th {
-            background-color: #ffb86c;
-            color: white;
+            background-color: #ffe0ec;
+            color: #ff5c8d;
         }
 
         tr:nth-child(even) {
-            background-color: #fdf6e3;
-        }
-
-        tr:hover {
-            background-color: #ffe0ec;
+            background-color: #f9f9f9;
         }
 
         .actions a {
             margin-right: 10px;
-            text-decoration: none;
             color: #ff5c8d;
             font-weight: bold;
+            text-decoration: none;
         }
 
         .actions a:hover {
@@ -99,36 +104,13 @@
         }
 
         @media (max-width: 600px) {
-            table, thead, tbody, th, td, tr {
-                display: block;
+            table {
+                font-size: 0.9rem;
             }
 
-            tr {
-                margin-bottom: 15px;
-            }
-
-            th {
-                display: none;
-            }
-
-            td {
-                padding: 10px;
-                position: relative;
-                padding-left: 50%;
-            }
-
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 15px;
-                top: 10px;
-                font-weight: bold;
-                color: #555;
-            }
-
-            .actions a {
-                display: inline-block;
-                margin-top: 5px;
+            .add-button {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -136,29 +118,27 @@
 <body>
 
 <div class="container">
-    <h1>🍦 Nossos Sorvetes</h1>
-
-    <a th:href="@{/Sorvete/novo}" class="add-button">+ Adicionar Novo Sorvete</a>
-
+    <h1>📋 Lista de Clientes</h1>
+    <a href="/Cliente/novo" class="add-button">+ Adicionar Novo Cliente</a>
     <table>
         <thead>
         <tr>
             <th>ID</th>
-            <th>Sabor</th>
-            <th>Descrição</th>
-            <th>Preço</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
             <th>Ações</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="sorvete : ${sorvetes}">
-            <td data-label="ID" th:text="${sorvete.id}">1</td>
-            <td data-label="Sabor" th:text="${sorvete.sabor}">Chocolate</td>
-            <td data-label="Descrição" th:text="${sorvete.descricao}">Delicioso</td>
-            <td data-label="Preço" th:text="${sorvete.preco}">5.00</td>
+        <tr th:each="cliente : ${clientes}">
+            <td th:text="${cliente.id}">1</td>
+            <td th:text="${cliente.nome}">João</td>
+            <td th:text="${cliente.email}">joao@email.com</td>
+            <td th:text="${cliente.telefone}">(11) 99999-9999</td>
             <td class="actions">
-                <a th:href="@{'/Sorvete/editar/' + ${sorvete.id}}">Editar</a>
-                <a th:href="@{'/Sorvete/excluir/' + ${sorvete.id}}">Excluir</a>
+                <a th:href="@{'/Cliente/editar/' + ${cliente.id}}">Editar</a>
+                <a th:href="@{'/Cliente/excluir/' + ${cliente.id}}">Excluir</a>
             </td>
         </tr>
         </tbody>

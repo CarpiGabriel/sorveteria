@@ -5,7 +5,8 @@
     <title>Sorveteria FESA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap"
+          rel="stylesheet">
 
     <style>
         /* Reset */
@@ -29,7 +30,7 @@
             background: white;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
             max-width: 500px;
             width: 100%;
             text-align: center;
@@ -60,6 +61,14 @@
             margin-bottom: 30px;
         }
 
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
         .button {
             background: linear-gradient(45deg, #ff5c8d, #ffb86c);
             border: none;
@@ -70,12 +79,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
         }
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         @media (max-width: 500px) {
@@ -85,6 +95,11 @@
 
             h1 {
                 font-size: 2.2rem;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
             }
 
             .button {
@@ -99,9 +114,12 @@
     <h1>🍦 Sorveteria FESA</h1>
     <p>Seja bem-vindo! Escolha uma opção deliciosa abaixo:</p>
 
-    <a href="/Sorvete/lista">
-        <button class="button">Ver Sorvetes</button>
-    </a>
+    <div class="button-container">
+        <a href="/Sorvete/lista" class="button">Ver Sorvetes</a>
+        <a href="/Cliente">
+            <button class="button">Ver Clientes</button>
+        </a>
+    </div>
 </div>
 
 </body>
