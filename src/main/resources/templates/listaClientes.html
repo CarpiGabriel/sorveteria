@@ -119,7 +119,10 @@
 
 <div class="container">
     <h1>📋 Lista de Clientes</h1>
-    <a href="/Cliente/novo" class="add-button">+ Adicionar Novo Cliente</a>
+    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a th:href="@{/}" class="add-button">← Voltar para o Início</a>
+        <a href="/Cliente/novo" class="add-button">+ Adicionar Novo Cliente</a>
+    </div>
     <table>
         <thead>
         <tr>

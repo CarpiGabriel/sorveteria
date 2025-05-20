@@ -1,83 +1,230 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Formulário de Cliente</title>
+    <meta charset="UTF-8" />
+    <title>Cadastro de Cliente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet" />
+
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdf6e3, #ffe0ec);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            padding: 40px 20px;
         }
 
         .container {
-            background-color: white;
-            padding: 2rem 3rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "✍️";
+            font-size: 100px;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            opacity: 0.08;
+            transform: rotate(-15deg);
         }
 
         h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #ff5c8d;
             text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         label {
+            font-weight: 600;
+            color: #ff5c8d;
+            margin-bottom: 6px;
             display: block;
-            margin-top: 1rem;
         }
 
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            margin-top: 1.5rem;
-            width: 100%;
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
             padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            font-size: 16px;
-            border-radius: 5px;
+            border-radius: 8px;
+            border: 1.5px solid #ffb6c1;
+            font-size: 1rem;
+            width: 100%;
+            transition: border-color 0.3s ease;
         }
 
-        .back-link {
-            text-align: center;
-            display: block;
-            margin-top: 1rem;
-            color: #007BFF;
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            border-color: #ff5c8d;
+            outline: none;
+        }
+
+        .address-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .return-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .return-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 500px) {
+            .address-group {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+
 <div class="container">
-    <h1 th:text="${cliente.id != null} ? 'Editar Cliente' : 'Novo Cliente'">Novo Cliente</h1>
+    <h1>Cadastro de Cliente</h1>
+    <a th:href="@{/Cliente}" class="return-button">← Voltar para a Lista</a>
+    <form th:action="@{/Cliente}" method="post" th:object="${cliente}">
+    <div>
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}" required />
+        </div>
 
-    <form th:action="@{/Cliente}" th:object="${cliente}" method="post">
-        <input type="hidden" th:field="*{id}" />
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nome}" required />
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" required />
+        </div>
 
-        <label for="email">Email:</label>
-        <input type="text" id="email" th:field="*{email}" required />
+        <div>
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" th:field="*{telefone}" required />
+        </div>
 
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" th:field="*{telefone}" required />
+        <div class="address-group">
+            <div>
+                <label for="cep">CEP</label>
+                <input type="text" id="cep" th:field="*{cep}" maxlength="9" placeholder="00000-000" required />
+            </div>
+            <div>
+                <label for="rua">Rua</label>
+                <input type="text" id="rua" th:field="*{rua}" required />
+            </div>
+            <div>
+                <label for="numero">Número</label>
+                <input type="text" id="numero" th:field="*{numero}" required />
+            </div>
+            <div>
+                <label for="complemento">Complemento</label>
+                <input type="text" id="complemento" th:field="*{complemento}" />
+            </div>
+            <div>
+                <label for="bairro">Bairro</label>
+                <input type="text" id="bairro" th:field="*{bairro}" required />
+            </div>
+        </div>
 
-        <button type="submit">Salvar</button>
+
+        <button type="submit" class="button">Salvar Cliente</button>
     </form>
-
-    <a class="back-link" th:href="@{/Cliente}">Voltar</a>
 </div>
+
+<script>
+    // Função para limpar os campos Rua e Bairro
+    function limpaEndereco() {
+        document.getElementById('rua').value = "";
+        document.getElementById('bairro').value = "";
+    }
+
+    // Função para preencher os campos a partir do retorno do ViaCEP
+    function preencherEndereco(dados) {
+        if (!("erro" in dados)) {
+            document.getElementById('rua').value = dados.logradouro;
+            document.getElementById('bairro').value = dados.bairro;
+        } else {
+            limpaEndereco();
+            alert("CEP não encontrado.");
+        }
+    }
+
+    // Evento para buscar endereço quando sair do campo CEP
+    document.getElementById('cep').addEventListener('blur', function () {
+        let cep = this.value.replace(/\D/g, '');
+
+        if (cep.length === 8) {
+            // Colocar placeholders enquanto busca
+            document.getElementById('rua').value = "...";
+            document.getElementById('bairro').value = "...";
+
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => preencherEndereco(data))
+                .catch(() => {
+                    limpaEndereco();
+                    alert("Erro ao buscar CEP.");
+                });
+        } else {
+            limpaEndereco();
+            alert("Formato de CEP inválido.");
+        }
+    });
+</script>
+
 </body>
 </html>
