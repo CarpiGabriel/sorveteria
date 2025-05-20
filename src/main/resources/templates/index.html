@@ -1,15 +1,108 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Bem-vindo à Sorveteria</title>
+    <title>Sorveteria FESA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdf6e3, #ffe0ec);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "🍨";
+            font-size: 100px;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            opacity: 0.1;
+            transform: rotate(25deg);
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            color: #ff5c8d;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>🍦 Sorveteria FESA</h1>
-<p>Seja bem-vindo! Escolha uma opção abaixo:</p>
 
-<a href="/sorvetes">
-    <button>Ver Sorvetes</button>
-</a>
+<div class="container">
+    <h1>🍦 Sorveteria FESA</h1>
+    <p>Seja bem-vindo! Escolha uma opção deliciosa abaixo:</p>
+
+    <a href="/sorvetes">
+        <button class="button">Ver Sorvetes</button>
+    </a>
+</div>
+
 </body>
 </html>
