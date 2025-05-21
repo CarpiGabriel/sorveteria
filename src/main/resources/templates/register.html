@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cadastro - Sorveteria FESA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdf6e3, #ffe0ec);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            padding: 15px 30px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 120px auto 40px auto;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: #ff5c8d;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            font-size: 1rem;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #ff5c8d;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            color: white;
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        .mensagem-sucesso {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div>🍧 Sorveteria Delícia</div>
+    <div>
+        <a th:href="@{/}">Início</a>
+        <a th:href="@{/Cliente}">Clientes</a>
+        <a th:href="@{/Sorvete}">Sorvetes</a>
+    </div>
+</nav>
+
+<!-- CONTAINER DE CADASTRO -->
+<div class="container">
+    <h1>👤 Cadastrar Novo Usuário</h1>
+
+    <!-- Mensagem de sucesso -->
+    <div th:if="${mensagemSucesso}" class="mensagem-sucesso" th:text="${mensagemSucesso}"></div>
+
+    <form th:action="@{/register}" th:object="${usuario}" method="post">
+        <label>Nome:
+            <input type="text" th:field="*{nome}" required />
+        </label>
+        <label>Nome de Usuário:
+            <input type="text" th:field="*{username}" required />
+        </label>
+        <label>Email:
+            <input type="email" th:field="*{email}" required />
+        </label>
+        <label>Senha:
+            <input type="password" th:field="*{senha}" required />
+        </label>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <div class="back-link">
+        <a th:href="@{/loga}">← Voltar ao Login</a>
+    </div>
+</div>
+
+<!-- RODAPÉ -->
+<footer>
+    © 2025 Sorveteria Delícia — Todos os direitos reservados.
+</footer>
+
+</body>
+</html>

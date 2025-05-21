@@ -2,6 +2,7 @@
 
     import br.edu.fesa.sorveteria.model.Cliente;
     import br.edu.fesa.sorveteria.repository.ClienteRepository;
+    import jakarta.servlet.http.HttpSession;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,14 @@
         }
 
         @GetMapping
-        public String listarClientes(Model model) {
+        public String listarClientes(Model model, HttpSession session) {
+            if (session.getAttribute("usuarioLogado") == null) {
+                return "redirect:/loga?erro=nao_autorizado";
+            }
+
+            // aqui seu código normal:
             model.addAttribute("clientes", clienteRepository.findAll());
-            return "listaClientes";
+            return "listaClientes"; // ou o nome do seu HTML de clientes
         }
 
         @GetMapping("/novo")

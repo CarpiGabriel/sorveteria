@@ -215,12 +215,29 @@
                 width: 180px;
             }
         }
+        .logout-button {
+            position: absolute;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: background 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-button:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>🍦 Sorveteria FESA</h1>
+    <a href="/logout" class="logout-button" title="Sair da conta">⎋Sair</a>
 </header>
 
 <div class="container">
