@@ -7,22 +7,25 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig {
+    public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .anyRequest().permitAll() // ou .authenticated() se quiser proteger outras rotas
+                        .requestMatchers("/", "/index", "/register", "/loga", "/css/**", "/js/**", "/h2-console/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**")
+                .formLogin(form -> form
+                        .loginPage("/loga")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .failureUrl("/loga?error=true")
+                        .permitAll()
                 )
-                .headers(headers -> headers
-                        .frameOptions().sameOrigin()
-                );
+                .logout(logout -> logout.permitAll())
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions().disable());
 
         return http.build();
     }
