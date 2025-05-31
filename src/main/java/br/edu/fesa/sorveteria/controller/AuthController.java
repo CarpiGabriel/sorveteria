@@ -1,7 +1,6 @@
 package br.edu.fesa.sorveteria.controller;
-
-import br.edu.fesa.sorveteria.model.Usuario;
 import br.edu.fesa.sorveteria.service.UsuarioService;
+import br.edu.fesa.sorveteria.model.Usuario;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,18 +22,6 @@ public class AuthController {
         return "loga";
     }
 
-    @PostMapping("/loga")
-    public String processaLogin(@RequestParam String username,
-                                @RequestParam String password,
-                                HttpSession session) {
-        Usuario usuario = usuarioService.buscarPorUsernameESenha(username, password);
-        if (usuario != null) {
-            session.setAttribute("usuarioLogado", usuario);
-            return "redirect:/index";
-        } else {
-            return "redirect:/loga?erro=true";
-        }
-    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
