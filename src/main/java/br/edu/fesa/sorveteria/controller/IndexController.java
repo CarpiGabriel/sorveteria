@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
+    @GetMapping("/")
+    public String redirecionarParaIndex() {
+        return "/index";
+    }
+
     @GetMapping("/index")
-    public String index(HttpSession session) {
-        if (session.getAttribute("usuarioLogado") == null) {
-            return "redirect:/loga?erro=nao_autorizado";
-        }
+    public String indexPage() {
         return "index";
     }
+
 }
