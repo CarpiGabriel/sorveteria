@@ -9,7 +9,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; // Importe esta classe
+import org.springframework.security.crypto.password.PasswordEncoder; // Importe esta classe
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Collections;
@@ -21,6 +22,7 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    // Injetamos o PasswordEncoder aqui, ele virá do AppConfig.java
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -28,7 +30,7 @@ public class SecurityConfig {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(passwordEncoder); // Usa o PasswordEncoder injetado
         System.out.println("DEBUG: SecurityConfig - DaoAuthenticationProvider bean criado e configurado.");
         return provider;
     }
@@ -50,7 +52,7 @@ public class SecurityConfig {
                         .loginPage("/loga")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/", true) // <--- APONTA PARA A RAIZ (SEU DASHBOARD)
+                        .defaultSuccessUrl("/", true) // Redireciona para a raiz (seu Dashboard)
                         .failureUrl("/loga?error=true")
                         .permitAll()
                 )
@@ -62,7 +64,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // Remova este Bean, pois já está no AppConfig.java
+    // REMOVA ESTE BEAN DAQUI. Ele deve estar apenas no AppConfig.java para evitar o ciclo.
     // @Bean
     // public PasswordEncoder passwordEncoder() {
     //     return new BCryptPasswordEncoder();
