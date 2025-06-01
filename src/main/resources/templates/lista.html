@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Lista de Sorvetes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>Sorveteria FESA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet" />
 
     <style>
+        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -19,227 +18,248 @@
             font-family: 'Quicksand', sans-serif;
             background: linear-gradient(135deg, #fdf6e3, #ffe0ec);
             min-height: 100vh;
+            padding-top: 70px; /* espaço para barra fixa */
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Navbar */
-        .navbar {
-            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
-            padding: 15px 30px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
+        /* Barra fixa no topo */
+        header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000;
+            height: 70px;
+            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            justify-content: center;
+            z-index: 1000;
         }
 
-        .navbar a {
+        header h1 {
+            font-family: 'Pacifico', cursive;
             color: white;
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 15px;
-        }
-
-        .navbar a:hover {
-            text-decoration: underline;
+            font-size: 1.8rem;
+            user-select: none;
         }
 
         .container {
             background: white;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-            max-width: 900px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
             width: 100%;
-            margin: 100px auto 40px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "🍨";
+            font-size: 100px;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            opacity: 0.1;
+            transform: rotate(25deg);
+            user-select: none;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #ff5c8d;
-            margin-bottom: 30px;
-            text-align: center;
+            margin-bottom: 10px;
+            user-select: none;
         }
 
-        .add-button,
-        .back-button {
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .button {
             background: linear-gradient(45deg, #ff5c8d, #ffb86c);
             border: none;
             border-radius: 50px;
-            padding: 10px 25px;
+            padding: 15px 30px;
             font-size: 1rem;
             color: white;
             font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        .button-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .back-button:hover,
-        .add-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-
-        .back-button span {
-            font-size: 1.2rem;
-            margin-right: 8px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1rem;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #ffb86c;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #fdf6e3;
-        }
-
-        tr:hover {
-            background-color: #ffe0ec;
-        }
-
-        .actions a {
-            margin-right: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             text-decoration: none;
-            color: #ff5c8d;
-            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .actions a:hover {
-            text-decoration: underline;
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
-        footer {
-            background: linear-gradient(45deg, #ff5c8d, #ffb86c);
+        /* Balões fixos de contato */
+        .contact-balloons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1100;
+        }
+
+        .balloon {
+            background: #ff5c8d;
             color: white;
-            text-align: center;
-            padding: 15px 10px;
-            font-size: 0.9rem;
-            margin-top: auto;
+            border-radius: 30px;
+            padding: 0 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            position: relative;
+            user-select: none;
+            transition: width 0.4s ease, padding-left 0.4s ease;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
-        @media (max-width: 600px) {
-            table, thead, tbody, th, td, tr {
-                display: block;
+        .balloon:hover,
+        .balloon:focus {
+            width: 330px; /* mais largura para caber o email todo */
+            padding-left: 20px;
+            border-radius: 30px;
+            justify-content: flex-start;
+            overflow: visible;
+        }
+
+        .balloon .icon {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            user-select: none;
+        }
+
+        .balloon .text {
+            opacity: 0;
+            width: 0;
+            margin-left: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease 0.15s, width 0.3s ease 0.15s;
+            user-select: text;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .balloon:hover .text,
+        .balloon:focus .text {
+            opacity: 1;
+            width: auto;
+            overflow: visible;
+        }
+
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px 20px;
             }
 
-            tr {
-                margin-bottom: 15px;
+            h1 {
+                font-size: 2.2rem;
             }
 
-            th {
-                display: none;
-            }
-
-            td {
-                padding: 10px;
-                position: relative;
-                padding-left: 50%;
-            }
-
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 15px;
-                top: 10px;
-                font-weight: bold;
-                color: #555;
-            }
-
-            .actions a {
-                display: inline-block;
-                margin-top: 5px;
-            }
-
-            .button-bar {
+            .button-container {
                 flex-direction: column;
-                align-items: stretch;
+                gap: 10px;
             }
+
+            .button {
+                width: 100%;
+            }
+
+            /* Ajusta balões na tela pequena */
+            .contact-balloons {
+                bottom: 20px;
+                right: 20px;
+                gap: 10px;
+            }
+
+            .balloon:hover,
+            .balloon:focus {
+                width: 180px;
+            }
+        }
+        .logout-button {
+            position: absolute;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: background 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-button:hover {
+            background: rgba(255, 255, 255, 0.35);
         }
     </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-    <div>🍧 Sorveteria Delícia</div>
-    <div>
-        <a th:href="@{/}">Início</a>
-        <a th:href="@{/Cliente}">Clientes</a>
-        <a th:href="@{/Sorvete}">Sorvetes</a>
-    </div>
-</nav>
+<header>
+    <h1>🍦 Sorveteria FESA</h1>
+    <a href="/logout" class="logout-button" title="Sair da conta">⎋Sair</a>
+</header>
 
-<!-- CONTEÚDO PRINCIPAL -->
 <div class="container">
-    <h1>🍦 Nossos Sorvetes</h1>
+    <h1>🍦 Sorveteria FESA</h1>
+    <p>Seja bem-vindo! Escolha uma opção deliciosa abaixo:</p>
 
-    <div class="button-bar">
-        <a th:href="@{/}" class="back-button">
-            <span>←</span> Voltar para o Início
-        </a>
-        <a th:href="@{/Sorvete/formulario}" class="add-button">+ Adicionar Novo Sorvete</a>
+    <div class="button-container">
+        <a href="/Sorvete" class="button">Ver Sorvetes</a>
+        <a href="/Cliente" class="button">Ver Clientes</a>
+        <a href="/Sorvete/informacoes" class="button">Informações de Sorvetes</a>
     </div>
-
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Sabor</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="sorvete : ${sorvetes}">
-            <td data-label="ID" th:text="${sorvete.id}">1</td>
-            <td data-label="Sabor" th:text="${sorvete.sabor}">Chocolate</td>
-            <td data-label="Descrição" th:text="${sorvete.descricao}">Delicioso</td>
-            <td data-label="Preço" th:text="${sorvete.preco}">5.00</td>
-            <td class="actions">
-                <a th:href="@{'/Sorvete/editar/' + ${sorvete.id}}">Editar</a>
-                <a th:href="@{'/Sorvete/excluir/' + ${sorvete.id}}">Excluir</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 
-<!-- RODAPÉ -->
-<footer>
-    © 2025 Sorveteria Delícia — Todos os direitos reservados.
-</footer>
+<div class="contact-balloons">
+    <div class="balloon" tabindex="0" role="button" aria-label="Telefone para contato">
+        <span class="icon">📞</span>
+        <span class="text">+55 (11) 98765-4321</span>
+    </div>
+    <div class="balloon" tabindex="0" role="button" aria-label="Email para contato">
+        <span class="icon">✉️</span>
+        <span class="text">contato@sorveteriafesa.com</span>
+    </div>
+</div>
 
 </body>
 </html>
