@@ -16,34 +16,34 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     public Usuario buscarPorUsername(String username) {
-        // --- INÍCIO: LINHAS DE DEPURAÇÃO ---
         System.out.println("DEBUG: UsuarioService - Buscando usuário no repositório por username: " + username);
-        // --- FIM: LINHAS DE DEPURAÇÃO ---
-
         Usuario usuario = usuarioRepository.findByUsername(username);
-
-        // --- INÍCIO: LINHAS DE DEPURAÇÃO ---
         if (usuario == null) {
             System.out.println("DEBUG: UsuarioService - findByUsername('" + username + "') retornou NULL.");
         } else {
             System.out.println("DEBUG: UsuarioService - findByUsername('" + username + "') retornou usuário: " + usuario.getUsername());
         }
-        // --- FIM: LINHAS DE DEPURAÇÃO ---
-
         return usuario;
     }
 
+    // Método para buscar por email, necessário para a validação de email único
+    public Usuario buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
     public void salvar(Usuario usuario) {
-        // --- INÍCIO: LINHAS DE DEPURAÇÃO ---
         System.out.println("DEBUG: UsuarioService - Salvando usuário: " + usuario.getUsername());
-        // --- FIM: LINHAS DE DEPURAÇÃO ---
+
+        // --- INÍCIO: REGRA DE NEGÓCIO - EMAIL ÚNICO ---
+        Usuario usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
+        if (usuarioExistente != null && (usuario.getId() == null || !usuarioExistente.getId().equals(usuario.getId()))) {
+            // Se o email já existe E não é o próprio usuário sendo editado
+            throw new IllegalArgumentException("O e-mail '" + usuario.getEmail() + "' já está cadastrado.");
+        }
+        // --- FIM: REGRA DE NEGÓCIO - EMAIL ÚNICO ---
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-
-        // --- INÍCIO: LINHAS DE DEPURAÇÃO ---
         System.out.println("DEBUG: UsuarioService - Senha codificada antes de salvar: " + usuario.getSenha().substring(0, Math.min(usuario.getSenha().length(), 15)) + "...");
-        // --- FIM: LINHAS DE DEPURAÇÃO ---
-
         usuarioRepository.save(usuario);
     }
 }

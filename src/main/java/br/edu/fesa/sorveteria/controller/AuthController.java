@@ -1,7 +1,7 @@
 package br.edu.fesa.sorveteria.controller;
 import br.edu.fesa.sorveteria.service.UsuarioService;
 import br.edu.fesa.sorveteria.model.Usuario;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession; // Manter se usar o logout, mas não para login/segurança
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +22,9 @@ public class AuthController {
         return "loga";
     }
 
-
     @GetMapping("/logout")
     public String logout(HttpSession session) {
+        // O Spring Security lida com a invalidação da sessão, mas manter esta aqui não causa mal.
         session.invalidate();
         return "redirect:/loga";
     }
@@ -38,9 +38,15 @@ public class AuthController {
 
     // Processar o cadastro (POST)
     @PostMapping("/register")
-    public String register(@ModelAttribute Usuario usuario, RedirectAttributes redirectAttributes) {
-        usuarioService.salvar(usuario);
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário cadastrado com sucesso!");
-        return "redirect:/loga";
+    public String register(@ModelAttribute Usuario usuario, RedirectAttributes redirectAttributes, Model model) {
+        try {
+            usuarioService.salvar(usuario);
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário cadastrado com sucesso!");
+            return "redirect:/loga";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("usuario", usuario); // Mantém os dados preenchidos no formulário
+            model.addAttribute("mensagemErro", e.getMessage()); // Exibe a mensagem de erro
+            return "register"; // Volta para o formulário de registro
+        }
     }
 }

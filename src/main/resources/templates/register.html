@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Cadastro - Sorveteria FESA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -21,6 +20,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .navbar {
@@ -58,7 +59,7 @@
             box-shadow: 0 12px 24px rgba(0,0,0,0.1);
             max-width: 400px;
             width: 100%;
-            margin: 120px auto 40px auto;
+            margin: 100px auto 40px auto; /* Ajustado para dar espaço ao navbar */
         }
 
         h1 {
@@ -100,7 +101,7 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 20px; /* Aumentado para dar espaço à mensagem de erro */
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
@@ -110,19 +111,26 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
-        .back-link {
+        .login-link {
             margin-top: 20px;
             text-align: center;
         }
 
-        .back-link a {
+        .login-link a {
             text-decoration: none;
             color: #ff5c8d;
             font-weight: bold;
         }
 
-        .back-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
+        }
+
+        .error-message { /* Estilo para a mensagem de erro */
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
         }
 
         footer {
@@ -132,22 +140,12 @@
             padding: 15px 10px;
             font-size: 0.9rem;
             margin-top: auto;
-        }
-
-        .mensagem-sucesso {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <div>🍧 Sorveteria Delícia</div>
     <div>
@@ -157,13 +155,8 @@
     </div>
 </nav>
 
-<!-- CONTAINER DE CADASTRO -->
 <div class="container">
-    <h1>👤 Cadastrar Novo Usuário</h1>
-
-    <!-- Mensagem de sucesso -->
-    <div th:if="${mensagemSucesso}" class="mensagem-sucesso" th:text="${mensagemSucesso}"></div>
-
+    <h1>📝 Cadastro</h1>
     <form th:action="@{/register}" th:object="${usuario}" method="post">
         <label>Nome:
             <input type="text" th:field="*{nome}" required />
@@ -177,15 +170,16 @@
         <label>Senha:
             <input type="password" th:field="*{senha}" required />
         </label>
+
+        <p th:if="${mensagemErro}" th:text="${mensagemErro}" class="error-message"></p>
+
         <button type="submit">Cadastrar</button>
     </form>
-
-    <div class="back-link">
-        <a th:href="@{/loga}">← Voltar ao Login</a>
+    <div class="login-link">
+        <p>Já tem uma conta? <a th:href="@{/loga}">Faça Login</a></p>
     </div>
 </div>
 
-<!-- RODAPÉ -->
 <footer>
     © 2025 Sorveteria Delícia — Todos os direitos reservados.
 </footer>
