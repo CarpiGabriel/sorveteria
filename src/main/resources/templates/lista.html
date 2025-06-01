@@ -51,7 +51,7 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            max-width: 500px; /* Aumentado para melhor encaixe dos botões 2x2 */
             width: 100%;
             text-align: center;
             position: relative;
@@ -83,12 +83,13 @@
             margin-bottom: 30px;
         }
 
+        /* --- ALTERAÇÃO AQUI: Layout de Grade para os Botões --- */
         .button-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            display: grid; /* Mudado para grid */
+            grid-template-columns: 1fr 1fr; /* Duas colunas de largura igual */
+            gap: 20px; /* Espaçamento entre os botões */
+            justify-items: stretch; /* Faz os itens preencherem a largura da coluna */
+            align-items: stretch; /* Faz os itens preencherem a altura da linha */
         }
 
         .button {
@@ -103,10 +104,13 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             text-decoration: none;
-            display: inline-flex;
+            display: inline-flex; /* Mantido para centralizar o texto dentro do botão */
             align-items: center;
             justify-content: center;
+            width: 100%; /* Garante que o botão preenche a célula da grid */
+            box-sizing: border-box; /* Para padding não estourar a largura */
         }
+        /* ... (restante do seu CSS para .button e outros, mantido) ... */
 
         .button:hover {
             transform: translateY(-2px);
@@ -193,13 +197,14 @@
                 font-size: 2.2rem;
             }
 
+            /* --- ALTERAÇÃO AQUI: Para telas menores, volta para 1 coluna --- */
             .button-container {
-                flex-direction: column;
+                grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
                 gap: 10px;
             }
 
             .button {
-                width: 100%;
+                width: 100%; /* Garante que o botão preenche a largura total */
             }
 
             /* Ajusta balões na tela pequena */
@@ -244,9 +249,10 @@
     <p>Seja bem-vindo! Escolha uma opção deliciosa abaixo:</p>
 
     <div class="button-container">
-        <a href="/Sorvete" class="button">Ver Sorvetes</a>
-        <a href="/Cliente" class="button">Ver Clientes</a>
+        <a href="/Sorvete/lista-tabela" class="button">Cadastrar novo Sorvete</a>
+        <a href="/Cliente" class="button">Cadastrar novo Cliente</a>
         <a href="/Sorvete/informacoes" class="button">Informações de Sorvetes</a>
+        <a href="/Cliente/informacoes" class="button">Informações de Clientes</a>
     </div>
 </div>
 

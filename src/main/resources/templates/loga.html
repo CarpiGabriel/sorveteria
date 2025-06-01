@@ -5,7 +5,6 @@
     <title>Login - Sorveteria FESA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
 
     <style>
@@ -136,18 +135,16 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <div>🍧 Sorveteria Delícia</div>
     <div>
-        <a th:href="@{/}">Início</a>
+        <a th:href="@{/Sorvete}">Início</a>
         <a th:href="@{/Cliente}">Clientes</a>
-        <a th:href="@{/Sorvete}">Sorvetes</a>
+        <a th:href="@{/Sorvete/lista-tabela}">Sorvetes</a>
     </div>
     <a th:href="@{/logout}">Sair</a>
 </nav>
 
-<!-- CONTAINER DE LOGIN -->
 <div class="container">
     <h1>🔐 Login</h1>
     <form th:action="@{/loga}" method="post">
@@ -165,7 +162,6 @@
     </div>
 </div>
 
-<!-- RODAPÉ -->
 <footer>
     © 2025 Sorveteria Delícia — Todos os direitos reservados.
 </footer>

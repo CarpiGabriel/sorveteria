@@ -15,6 +15,7 @@ public class Cliente {
     private String nome;
     private String email;
     private String telefone;
+    private Integer idade; // NOVO CAMPO: IDADE
 
     // Novos campos para endereço
     private String cep;
@@ -58,6 +59,15 @@ public class Cliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    // Getters e Setters para Idade
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
     }
 
     public String getCep() {

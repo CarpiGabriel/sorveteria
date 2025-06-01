@@ -22,13 +22,13 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // Agora injetado da SorveteriaApplication
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder); // Usa o PasswordEncoder injetado
+        provider.setPasswordEncoder(passwordEncoder);
         System.out.println("DEBUG: SecurityConfig - DaoAuthenticationProvider bean criado e configurado.");
         return provider;
     }
@@ -43,24 +43,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        // Permitir acesso a todas as páginas públicas, incluindo /login e /Sorvete/informacoes
-                        .requestMatchers("/", "/index", "/register", "/loga", "/css/**", "/js/**", "/h2-console/**", "/login", "/Sorvete/informacoes").permitAll()
-                        .anyRequest().authenticated()
+                        // Permitir acesso a:
+                        // / (home), /Sorvete (home), /Sorvete/informacoes (dashboard de sorvetes),
+                        // /Sorvete/precos (preços de sorvetes), /Sorvete/lista-tabela (NOVO: tabela de sorvetes),
+                        // /Cliente/informacoes (dashboard de clientes)
+                        // registro, login, recursos estáticos, console H2.
+                        .requestMatchers("/", "/Sorvete", "/Sorvete/informacoes", "/Sorvete/precos", "/Cliente","/Sorvete/lista-tabela", "/Cliente/informacoes", "/register", "/loga", "/css/**", "/js/**", "/h2-console/**", "/login").permitAll()
+                        .anyRequest().authenticated() // Todas as outras requisições (como cadastro e edição) precisam de autenticação
                 )
                 .formLogin(form -> form
-                        .loginPage("/loga") // Sua página de login personalizada
+                        .loginPage("/loga")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/", true) // Redireciona para a raiz (Dashboard) após login
-                        .failureUrl("/loga?error=true") // Redireciona para sua página de login com erro
+                        .defaultSuccessUrl("/Sorvete", true) // Redireciona para /Sorvete (sua nova home) após login
+                        .failureUrl("/loga?error=true")
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // URL para processar o logout
-                        .logoutSuccessUrl("/loga?logout=true") // Redireciona após logout bem-sucedido
-                        .permitAll() // Permitir acesso à URL de logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/loga?logout=true")
+                        .permitAll()
                 )
-                .csrf(csrf -> csrf.disable()) // Desabilitar CSRF para simplificar, mas cuidado em produção
-                .headers(headers -> headers.frameOptions().disable()); // Para console H2
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions().disable());
 
         System.out.println("DEBUG: SecurityConfig - SecurityFilterChain construído.");
         return http.build();

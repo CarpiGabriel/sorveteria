@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Informações de Sorvetes</title>
+    <title>Informações de Clientes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         /* Estilos básicos copiados do seu lista.html para consistência */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #fdf6e3, #ffe0ec); min-height: 100vh; display: flex; flex-direction: column; }
+        /* Navbar CSS */
         .navbar { background: linear-gradient(45deg, #ff5c8d, #ffb86c); padding: 15px 30px; color: white; font-weight: bold; font-size: 1.2rem; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .navbar a { color: white; text-decoration: none; font-weight: 600; margin-left: 15px; }
         .navbar a:hover { text-decoration: underline; }
@@ -47,28 +48,32 @@
             color: #ffb86c;
             margin: 0;
         }
-        .sorvetes-list {
+        /* Footer CSS */
+        footer { background: linear-gradient(45deg, #ff5c8d, #ffb86c); color: white; text-align: center; padding: 15px 10px; font-size: 0.9rem; margin-top: auto; width: 100%; }
+
+        /* Estilos para a nova lista de clientes (semelhante a sorvetes-list) */
+        .clientes-list {
             margin-top: 30px;
             border-top: 1px solid #eee;
             padding-top: 20px;
         }
-        .sorvetes-list h2 {
+        .clientes-list h2 {
             font-family: 'Quicksand', sans-serif;
             color: #ff5c8d;
             font-size: 1.8rem;
             margin-bottom: 15px;
             text-align: center;
         }
-        .sorvetes-list ul {
+        .clientes-list ul {
             list-style: none;
             padding: 0;
-            max-height: 300px; /* Limita altura da lista */
-            overflow-y: auto; /* Adiciona scroll se lista for grande */
+            max-height: 300px;
+            overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 10px;
             padding: 10px;
         }
-        .sorvetes-list li {
+        .clientes-list li {
             background: #ffe0ec;
             padding: 10px 15px;
             margin-bottom: 8px;
@@ -79,13 +84,12 @@
             font-size: 1.1rem;
             color: #555;
         }
-        .sorvetes-list li:last-child {
+        .clientes-list li:last-child {
             margin-bottom: 0;
         }
-        .sorvetes-list li strong {
+        .clientes-list li strong {
             color: #ff5c8d;
         }
-        footer { background: linear-gradient(45deg, #ff5c8d, #ffb86c); color: white; text-align: center; padding: 15px 10px; font-size: 0.9rem; margin-top: auto; }
     </style>
 </head>
 <body>
@@ -93,39 +97,40 @@
 <nav class="navbar">
     <div>🍧 Sorveteria Delícia</div>
     <div>
-        <a th:href="@{/}">Início</a>
+        <a th:href="@{/Sorvete}">Início</a>
         <a th:href="@{/Cliente}">Clientes</a>
-        <a th:href="@{/Sorvete}">Sorvetes</a>
+        <a th:href="@{/Sorvete/lista-tabela}">Sorvetes</a>
     </div>
 </nav>
 
 <div class="container">
-    <h1>📊 Dashboard de Sorvetes</h1>
+    <h1>📊 Dashboard de Clientes</h1>
 
-    <a th:href="@{/Sorvete/lista-tabela}" class="back-button">
-        <span>←</span> Voltar para a Lista de Sorvetes
+    <a th:href="@{/Cliente}" class="back-button">
+        <span>←</span> Voltar para a Lista de Clientes
     </a>
 
     <div class="dashboard-cards">
         <div class="card">
-            <h2>Total de Sorvetes</h2>
-            <p th:text="${totalSorvetes}">0</p>
+            <h2>Total de Clientes</h2>
+            <p th:text="${totalClientes}">0</p>
         </div>
         <div class="card">
-            <h2>Preço Médio</h2>
-            <p th:text="${'R$ ' + mediaPrecoSorvetes}">R$ 0.00</p>
+            <h2>Média de Idade</h2>
+            <p th:text="${mediaIdadeClientes + ' anos'}">0.00 anos</p>
         </div>
     </div>
 
-    <div class="sorvetes-list">
-        <h2>Sabores Cadastrados</h2>
-        <ul th:if="${!todosOsSorvetes.isEmpty()}">
-            <li th:each="sorvete : ${todosOsSorvetes}">
-                <span th:text="${sorvete.sabor}">Sabor do Sorvete</span>
-                <span th:text="${'R$ ' + #numbers.formatDecimal(sorvete.preco, 1, 2)}">R$ 0.00</span>
+    <div class="clientes-list">
+        <h2>Clientes Cadastrados</h2>
+        <ul th:if="${!todosOsClientes.isEmpty()}">
+            <li th:each="cliente : ${todosOsClientes}">
+                <span th:text="${cliente.nome}">Nome do Cliente</span>
+                <span th:if="${cliente.idade != null}" th:text="${cliente.idade + ' anos'}">30 anos</span>
+                <span th:if="${cliente.idade == null}">Idade não informada</span>
             </li>
         </ul>
-        <p th:if="${todosOsSorvetes.isEmpty()}" style="text-align: center; color: #555;">Nenhum sorvete cadastrado ainda.</p>
+        <p th:if="${todosOsClientes.isEmpty()}" style="text-align: center; color: #555;">Nenhum cliente cadastrado ainda.</p>
     </div>
 
 </div>

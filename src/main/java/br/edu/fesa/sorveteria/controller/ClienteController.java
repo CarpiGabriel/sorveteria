@@ -2,10 +2,11 @@ package br.edu.fesa.sorveteria.controller;
 
 import br.edu.fesa.sorveteria.model.Cliente;
 import br.edu.fesa.sorveteria.repository.ClienteRepository;
-// import jakarta.servlet.http.HttpSession; // Remova esta importação se não for mais usada
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List; // Importar List
 
 @Controller
 @RequestMapping("/Cliente")
@@ -18,15 +19,9 @@ public class ClienteController {
     }
 
     @GetMapping
-    public String listarClientes(Model model /*, HttpSession session */) { // Remova HttpSession do parâmetro
-        // REMOVA ESTE BLOCO INTEIRO. Spring Security já lida com isso.
-        // if (session.getAttribute("usuarioLogado") == null) {
-        //     return "redirect:/loga?erro=nao_autorizado";
-        // }
-
-        // aqui seu código normal:
+    public String listarClientes(Model model) {
         model.addAttribute("clientes", clienteRepository.findAll());
-        return "listaClientes"; // ou o nome do seu HTML de clientes
+        return "listaClientes";
     }
 
     @GetMapping("/novo")
@@ -50,6 +45,7 @@ public class ClienteController {
             existente.setBairro(cliente.getBairro());
             existente.setNumero(cliente.getNumero());
             existente.setComplemento(cliente.getComplemento());
+            existente.setIdade(cliente.getIdade());
 
             clienteRepository.save(existente);
         } else {
@@ -72,5 +68,26 @@ public class ClienteController {
     public String excluirCliente(@PathVariable Long id) {
         clienteRepository.deleteById(id);
         return "redirect:/Cliente";
+    }
+
+    @GetMapping("/informacoes")
+    public String mostrarDashboardClientes(Model model) {
+        long totalClientes = clienteRepository.count();
+        Double mediaIdade = clienteRepository.findAverageIdade();
+        List<Cliente> todosOsClientes = clienteRepository.findAll(); // NOVO: Busca todos os clientes
+
+        String mediaFormatada;
+        if (mediaIdade != null) {
+            long mediaArredondada = Math.round(mediaIdade);
+            mediaFormatada = String.valueOf(mediaArredondada);
+        } else {
+            mediaFormatada = "N/A";
+        }
+
+        model.addAttribute("totalClientes", totalClientes);
+        model.addAttribute("mediaIdadeClientes", mediaFormatada);
+        model.addAttribute("todosOsClientes", todosOsClientes); // NOVO: Adiciona a lista de clientes ao modelo
+
+        return "cliente_dashboard";
     }
 }

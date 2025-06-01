@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title>Cadastro de Cliente</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet" />
 
     <style>
@@ -68,7 +67,8 @@
 
         input[type="text"],
         input[type="email"],
-        input[type="tel"] {
+        input[type="tel"],
+        input[type="number"] { /* Adicionado input[type="number"] */
             padding: 10px;
             border-radius: 8px;
             border: 1.5px solid #ffb6c1;
@@ -79,7 +79,8 @@
 
         input[type="text"]:focus,
         input[type="email"]:focus,
-        input[type="tel"]:focus {
+        input[type="tel"]:focus,
+        input[type="number"]:focus { /* Adicionado input[type="number"] */
             border-color: #ff5c8d;
             outline: none;
         }
@@ -163,6 +164,10 @@
                    title="Formato esperado: (00) 00000-0000" />
         </div>
 
+        <div>
+            <label for="idade">Idade</label>
+            <input type="number" id="idade" th:field="*{idade}" min="0" max="150" required />
+        </div>
 
         <div class="address-group">
             <div>
