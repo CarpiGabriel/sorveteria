@@ -79,7 +79,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions().disable())
                 .exceptionHandling(exceptions -> exceptions
                         // ATUALIZADO: Tratamento de acesso negado
-                        .accessDeniedPage("/acesso-negado") // Redireciona para esta página em caso de Access Denied (403)
+                        .accessDeniedPage("/acesso-negado") // Redireciona para esta página em caso de Access Denied
                 );
 
         System.out.println("DEBUG: SecurityConfig - SecurityFilterChain construído.");
