@@ -6,6 +6,11 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.ArrayList; // Importe ArrayList
+import java.util.List;     // Importe List
+import org.springframework.security.core.GrantedAuthority; // Importe GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority; // Importe SimpleGrantedAuthority
+
 
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
@@ -23,23 +28,24 @@ public class UserDetailsService implements org.springframework.security.core.use
             System.out.println("DEBUG: UserDetailsService - Usuário '" + username + "' NÃO ENCONTRADO no banco de dados.");
             throw new UsernameNotFoundException("Usuário não encontrado");
         } else {
-            System.out.println("DEBUG: UserDetailsService - Usuário '" + username + "' ENCONTRADO. Detalhes: ID=" + usuario.getId() + ", Nome=" + usuario.getNome() + ", Email=" + usuario.getEmail());
-            // CUIDADO: Não imprima a senha diretamente em logs de produção! Apenas para depuração.
+            System.out.println("DEBUG: UserDetailsService - Usuário '" + username + "' ENCONTRADO. Detalhes: ID=" + usuario.getId() + ", Nome=" + usuario.getNome() + ", Email=" + usuario.getEmail() + ", Role=" + usuario.getRole());
             System.out.println("DEBUG: UserDetailsService - Senha do usuário (codificada) recuperada: " + usuario.getSenha().substring(0, Math.min(usuario.getSenha().length(), 15)) + "...");
         }
 
-        // --- INÍCIO: NOVAS LINHAS DE DEPURAÇÃO ---
-        // Estas linhas não afetam a lógica, mas ajudam a visualizar o que o Spring Security está recebendo.
+        // --- ATUALIZADO: Retorna as roles do usuário ---
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        // Adiciona a role do usuário, prefixando com "ROLE_"
+        authorities.add(new SimpleGrantedAuthority(usuario.getRole()));
+
         System.out.println("DEBUG: UserDetailsService - Construindo UserDetails para Spring Security:");
         System.out.println("DEBUG: UserDetails - Username: " + usuario.getUsername());
         System.out.println("DEBUG: UserDetails - Password (codificada): " + usuario.getSenha().substring(0, Math.min(usuario.getSenha().length(), 15)) + "...");
-        System.out.println("DEBUG: UserDetails - Authorities: " + Collections.emptyList());
-        // --- FIM: NOVAS LINHAS DE DEPURAÇÃO ---
+        System.out.println("DEBUG: UserDetails - Authorities: " + authorities);
 
-        return User.builder()
-                .username(usuario.getUsername())
-                .password(usuario.getSenha()) // a senha deve estar codificada (ex: BCrypt)
-                .authorities(Collections.emptyList()) // ou roles se tiver
-                .build();
+        return new org.springframework.security.core.userdetails.User(
+                usuario.getUsername(),
+                usuario.getSenha(),
+                authorities // Agora passa as roles reais
+        );
     }
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Acesso Negado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos básicos copiados para consistência */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdf6e3, #ffe0ec);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Altera para alinhar ao topo */
+        }
+        .navbar { background: linear-gradient(45deg, #ff5c8d, #ffb86c); padding: 15px 30px; color: white; font-weight: bold; font-size: 1.2rem; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .navbar a { color: white; text-decoration: none; font-weight: 600; margin-left: 15px; }
+        .navbar a:hover { text-decoration: underline; }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px; /* Ajuste para o navbar (aprox. 70px de altura + margem) */
+            margin-bottom: 40px; /* Espaço para o footer */
+        }
+        h1 { font-family: 'Pacifico', cursive; font-size: 2.5rem; color: #ff5c8d; margin-bottom: 30px; text-align: center; }
+        .message { font-size: 1.2rem; color: #555; margin-bottom: 20px; }
+        .back-button { background: linear-gradient(45deg, #ff5c8d, #ffb86c); border: none; border-radius: 50px; padding: 10px 25px; font-size: 1rem; color: white; font-weight: 600; text-decoration: none; box-shadow: 0 8px 15px rgba(0,0,0,0.1); transition: all 0.3s ease; display: inline-block; }
+        .back-button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        footer { background: linear-gradient(45deg, #ff5c8d, #ffb86c); color: white; text-align: center; padding: 15px 10px; font-size: 0.9rem; margin-top: auto; width: 100%; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div>🍧 Sorveteria Delícia</div>
+    <div>
+        <a th:href="@{/Sorvete}">Início</a>
+        <a th:href="@{/Cliente}">Clientes</a>
+        <a th:href="@{/Sorvete/lista-tabela}">Sorvetes</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>🚫 Acesso Negado!</h1>
+    <p class="message">Você não tem permissão para acessar esta página ou realizar esta ação.</p>
+    <p class="message">Somente usuários administradores podem cadastrar, editar ou excluir itens.</p>
+    <a th:href="@{/Sorvete}" class="back-button">← Voltar para a Home</a>
+</div>
+
+<footer>
+    © 2025 Sorveteria Delícia — Todos os direitos reservados.
+</footer>
+
+</body>
+</html>
+

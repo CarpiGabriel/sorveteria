@@ -26,7 +26,6 @@ public class UsuarioService {
         return usuario;
     }
 
-    // Método para buscar por email, necessário para a validação de email único
     public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
@@ -34,16 +33,21 @@ public class UsuarioService {
     public void salvar(Usuario usuario) {
         System.out.println("DEBUG: UsuarioService - Salvando usuário: " + usuario.getUsername());
 
-        // --- INÍCIO: REGRA DE NEGÓCIO - EMAIL ÚNICO ---
         Usuario usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
         if (usuarioExistente != null && (usuario.getId() == null || !usuarioExistente.getId().equals(usuario.getId()))) {
-            // Se o email já existe E não é o próprio usuário sendo editado
             throw new IllegalArgumentException("O e-mail '" + usuario.getEmail() + "' já está cadastrado.");
         }
-        // --- FIM: REGRA DE NEGÓCIO - EMAIL ÚNICO ---
 
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+
+        // NOVO: Atribui uma role padrão se não for especificada
+        if (usuario.getRole() == null || usuario.getRole().isEmpty()) {
+            usuario.setRole("ROLE_USER"); // Role padrão para novos cadastros
+        }
+
         System.out.println("DEBUG: UsuarioService - Senha codificada antes de salvar: " + usuario.getSenha().substring(0, Math.min(usuario.getSenha().length(), 15)) + "...");
+        System.out.println("DEBUG: UsuarioService - Role atribuída: " + usuario.getRole()); // Depuração da role
+
         usuarioRepository.save(usuario);
     }
 }
